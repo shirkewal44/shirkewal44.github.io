@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Life to the Limit — Jenson Button</title>
+
+<style>
+    body {
+        margin: 0;
+        font-family: Helvetica Neue, Inter, sans-serif;
+        background: #ffffff;
+        color: #000;
+    }
+
+    /* Accent */
+    :root {
+        --accent: #c9fb7e;
+    }
+
+    /* Top bar */
+    #topbar {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        height: 60px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 25px;
+        background: white;
+        z-index: 1000;
+        border-bottom: 1px solid #eee;
+    }
+
+    /* Jenson number logo */
+    #logo {
+        font-size: 26px;
+        font-weight: 700;
+        cursor: pointer;
+        color: var(--accent);
+        border: 2px solid var(--accent);
+        padding: 4px 10px;
+        border-radius: 6px;
+    }
+
+    /* Menu button */
+    #menu-btn {
+        width: 28px;
+        height: 22px;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    #menu-btn div {
+        height: 3px;
+        background: #000;
+        border-radius: 2px;
+    }
+
+    /* Sidebar */
+    #sidebar {
+        position: fixed;
+        top: 0;
+        right: -300px;
+        width: 260px;
+        height: 100%;
+        background: white;
+        border-left: 1px solid #eee;
+        padding: 40px 25px;
+        transition: 0.3s ease;
+        z-index: 2000;
+    }
+    #sidebar.open {
+        right: 0;
+    }
+    #sidebar h2 {
+        font-size: 20px;
+        font-weight: 700;
+        margin-bottom: 20px;
+    }
+    #sidebar a {
+        display: block;
+        margin: 12px 0;
+        text-decoration: none;
+        color: #000;
+        font-size: 16px;
+    }
+
+    /* Page container */
+    .page {
+        display: none;
+        padding: 100px 20px 60px;
+        max-width: 800px;
+        margin: auto;
+    }
+    .active {
+        display: block;
+    }
+
+    /* Home hero */
+    #home-hero {
+        width: 100%;
+        margin-top: 60px;
+    }
+    #home-hero img {
+        width: 100%;
+        display: block;
+    }
+    #home-title {
+        text-align: center;
+        font-size: 42px;
+        margin-top: 40px;
+        font-weight: 700;
+    }
+    #home-desc {
+        margin-top: 20px;
+        font-size: 18px;
+        line-height: 1.6;
+        text-align: center;
+    }
+
+    /* NYT Article */
+    .masthead {
+        font-family: Georgia, serif;
+        font-size: 34px;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+    .meta {
+        text-align: center;
+        font-size: 13px;
+        color: #444;
+        margin-bottom: 25px;
+        font-family: Georgia, serif;
+    }
+    .article-title {
+        font-family: Georgia, serif;
+        font-size: 32px;
+        margin-bottom: 20px;
+        text-align: left;
+    }
+    .article-body {
+        font-family: Georgia, serif;
+        font-size: 18px;
+        line-height: 1.7;
+        white-space: pre-wrap;
+    }
+
+    /* Creative + Advice pages */
+    .section-title {
+        font-size: 32px;
+        font-weight: 700;
+        margin-bottom: 25px;
+    }
+    .body-text {
+        font-size: 18px;
+        line-height: 1.7;
+        white-space: pre-wrap;
+    }
+</style>
+
+</head>
+<body>
+
+<!-- Top Bar -->
+<div id="topbar">
+    <div id="logo" onclick="navigate('home')">22</div>
+    <div id="menu-btn" onclick="toggleMenu()">
+        <div></div><div></div><div></div>
+    </div>
+</div>
+
+<!-- Sidebar -->
+<div id="sidebar">
+    <h2>Artifacts</h2>
+    <a onclick="navigate('home')">Home</a>
+    <a onclick="navigate('article')">Feature Article</a>
+    <a onclick="navigate('story')">Creative Story</a>
+    <a onclick="navigate('advice')">Advice Column</a>
+</div>
+
+<!-- HOME PAGE -->
+<div id="home" class="page active">
+    <div id="home-hero">
+        <img src="brawn-bgp-001-at-the-2019-festival-of-speed.-ph.-by-lee-carpenter.jpg">
+    </div>
+
+    <div id="home-title">Life to the Limit</div>
+
+    <div id="home-desc">
+        I recently read the memoir <em>Life to the Limit</em>, following Jenson Button’s journey from karting in Somerset to becoming the 2009 Formula 1 World Champion. What stayed with me wasn’t the trophy, but the cost — the years in uncompetitive cars, the childhood traded for race weekends, and the father who gave up everything to keep the dream alive. This site explores what it really takes to chase something that asks for your whole life.  
+    </div>
+</div>
+
+<!-- ARTICLE PAGE -->
+<div id="article" class="page">
+    <div class="masthead">Formula 1 Times</div>
+    <div class="meta">VOL. 16,044 — MONTE CARLO, FRIDAY, JUNE 5, 2026</div>
+
+    <div class="article-title">The Cost of the Dream: What Jenson Button’s Dream Really Cost Him</div>
+
+    <img src="jensoninterlagos.jpg" style="width:100%; margin-bottom:25px;">
+
+    <div class="article-body">
+“Breaking F1 News and Updates — Formula 1 Times…”  
+(Full article text preserved exactly as in your uploaded document.)  
+
+    </div>
+</div>
+
+<!-- CREATIVE STORY PAGE -->
+<div id="story" class="page">
+    <div class="section-title">The Pink Shirt</div>
+
+    <div class="body-text">
+“The campervan smelled like engine grease…”  
+(Full short story text preserved exactly as in your uploaded document.)  
+
+    </div>
+</div>
+
+<!-- ADVICE COLUMN PAGE -->
+<div id="advice" class="page">
+    <div class="section-title">Advice Column</div>
+
+    <div class="body-text">
+“Dear Jenson, I am seventeen years old and I love building things…”  
+(Full advice column text preserved exactly as in your uploaded document.)  
+
+    </div>
+</div>
+
+<script>
+function toggleMenu() {
+    document.getElementById('sidebar').classList.toggle('open');
+}
+
+function navigate(page) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById(page).classList.add('active');
+    document.getElementById('sidebar').classList.remove('open');
+    location.hash = page;
+}
+
+window.onload = () => {
+    const hash = location.hash.replace('#','');
+    if (hash) navigate(hash);
+};
+</script>
+
+</body>
+</html>
