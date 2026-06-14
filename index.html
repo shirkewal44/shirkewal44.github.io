@@ -1,430 +1,164 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Jenson Button Site</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Libre+Franklin:wght@400;500;600&family=Old+Standard+TT:wght@400;700&display=swap" rel="stylesheet">
-  <style>
-    :root{
-      --bg:#ffffff;
-      --surface:#ffffff;
-      --surface-2:#f7f7f7;
-      --text:#111111;
-      --muted:#5d5d5d;
-      --line:#e7e7e7;
-      --accent:#c9fb7e;
-      --shadow:0 8px 24px rgba(0,0,0,.06);
-    }
-
-    *{box-sizing:border-box}
-    html,body{
-      margin:0;
-      padding:0;
-      background:#fff;
-      color:var(--text);
-      font-family:'Libre Franklin',Arial,sans-serif;
-      scroll-behavior:smooth;
-      line-height:1.6;
-    }
-
-    a{text-decoration:none;color:inherit}
-    img{display:block;max-width:100%;height:auto}
-
-    .shell{display:flex;min-height:100vh}
-
-    .sidebar{
-      position:fixed;
-      top:0;
-      right:-350px;
-      width:350px;
-      max-width:88vw;
-      height:100vh;
-      background:#fff;
-      border-left:1px solid color-mix(in srgb,var(--accent) 45%, var(--line));
-      padding:32px 24px;
-      transition:.28s ease;
-      z-index:60;
-      box-shadow:var(--shadow);
-    }
-
-    .sidebar.open{right:0}
-
-    .overlay{
-      position:fixed;
-      inset:0;
-      background:rgba(0,0,0,.12);
-      opacity:0;
-      pointer-events:none;
-      transition:.25s;
-      z-index:50;
-    }
-
-    .overlay.show{
-      opacity:1;
-      pointer-events:auto;
-    }
-
-    .sidebar h3{
-      font-size:.78rem;
-      letter-spacing:.16em;
-      text-transform:uppercase;
-      color:var(--muted);
-      margin:0 0 18px;
-    }
-
-    .sidebar nav{
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-    }
-
-    .sidebar a{
-      padding:12px 0;
-      border-bottom:1px solid color-mix(in srgb,var(--accent) 35%, var(--line));
-    }
-
-    .page{width:100%}
-
-    .topbar{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      padding:18px 28px;
-      border-bottom:1px solid color-mix(in srgb,var(--accent) 40%, var(--line));
-      position:sticky;
-      top:0;
-      background:#fff;
-      z-index:40;
-    }
-
-    .home-link{
-      display:flex;
-      align-items:center;
-      gap:14px;
-      font-weight:600;
-      letter-spacing:.08em;
-      text-transform:uppercase;
-      font-size:.85rem;
-    }
-
-    .preview-btn{
-      border:1px solid var(--line);
-      background:#fff;
-      min-width:78px;
-      height:48px;
-      border-radius:999px;
-      cursor:pointer;
-      display:grid;
-      place-items:center;
-      font-family:'Libre Franklin',sans-serif;
-      font-size:.88rem;
-      font-weight:600;
-      color:#111;
-      padding:0 16px;
-    }
-
-    .menu-btn{
-      border:1px solid var(--line);
-      background:#fff;
-      min-width:48px;
-      height:48px;
-      border-radius:999px;
-      cursor:pointer;
-      display:grid;
-      place-items:center;
-      font-family:'Old Standard TT',serif;
-      font-size:1.15rem;
-      font-weight:700;
-      color:#111;
-      padding:0 14px;
-    }
-
-    .hero-img{
-      width:100%;
-      height:52vh;
-      min-height:320px;
-      object-fit:cover;
-      background:linear-gradient(90deg,#f6fbe9,#ecf8d0);
-      border-bottom:1px solid color-mix(in srgb,var(--accent) 45%, var(--line));
-    }
-
-    .content{
-      width:min(1120px,calc(100% - 36px));
-      margin:0 auto;
-      padding:34px 0 70px;
-    }
-
-    .intro{
-      max-width:820px;
-      font-size:1.06rem;
-      color:#232323;
-      border-left:3px solid var(--accent);
-      padding-left:18px;
-      margin-inline:auto;
-      font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text",system-ui,sans-serif;
-      font-weight:400;
-    }
-
-    .hidden{display:none}
-
-    .article-wrap{
-      width:min(900px,calc(100% - 36px));
-      margin:0 auto;
-      padding:34px 0 80px;
-    }
-
-    .nyt-head{
-      text-align:center;
-      border-bottom:1px solid #d9d9d9;
-      padding-bottom:18px;
-      margin-bottom:32px;
-    }
-
-    .nyt-kicker{
-      font-family:'Libre Franklin',sans-serif;
-      font-size:.75rem;
-      letter-spacing:.12em;
-      text-transform:uppercase;
-      color:#444;
-      margin-bottom:10px;
-    }
-
-    .nyt-title{
-      font-family:'Old Standard TT',serif;
-      font-size:clamp(2.8rem,6vw,5.2rem);
-      line-height:1;
-      letter-spacing:-.04em;
-      margin:0 0 14px;
-    }
-
-    .nyt-meta{
-      margin-top:18px;
-      font-size:.85rem;
-      color:#666;
-      font-family:'Libre Franklin',sans-serif;
-    }
-
-    .nyt-image{
-      width:100%;
-      height:auto;
-      display:block;
-      margin:0 auto 12px;
-    }
-
-    .article-body{
-      font-family:'Cormorant Garamond',serif;
-      font-size:1.45rem;
-      line-height:1.62;
-      color:#111;
-    }
-
-    .article-body p{
-      margin:0 0 1.1em;
-    }
-
-    .article-body h2{
-      font-family:'Libre Franklin',sans-serif;
-      font-size:1rem;
-      text-transform:uppercase;
-      letter-spacing:.14em;
-      margin:2.6rem 0 1rem;
-    }
-
-    .works{
-      font-family:'Libre Franklin',sans-serif;
-      font-size:1rem;
-      line-height:1.7;
-    }
-
-    @media (max-width:700px){
-      .topbar{padding:14px 16px}
-      .hero-img{height:34vh;min-height:220px}
-      .article-body{font-size:1.23rem}
-      .sidebar{width:100%}
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Jenson Button Site</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Libre+Franklin:wght@400;500;600&family=Old+Standard+TT:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fff;--text:#111;--muted:#5d5d5d;--line:#e7e7e7;--accent:#c9fb7e;--shadow:0 8px 24px rgba(0,0,0,.06)}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:#fff;color:var(--text);font-family:'Libre Franklin',Arial,sans-serif;scroll-behavior:smooth;line-height:1.6}
+a{text-decoration:none;color:inherit}img{display:block;max-width:100%;height:auto}
+.sidebar{position:fixed;top:0;right:-350px;width:350px;max-width:88vw;height:100vh;background:#fff;border-left:1px solid color-mix(in srgb,var(--accent) 45%, var(--line));padding:32px 24px;transition:.28s ease;z-index:60;box-shadow:var(--shadow)}
+.sidebar.open{right:0}.overlay{position:fixed;inset:0;background:rgba(0,0,0,.12);opacity:0;pointer-events:none;transition:.25s;z-index:50}.overlay.show{opacity:1;pointer-events:auto}
+.sidebar h3{font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin:0 0 18px}.sidebar nav{display:flex;flex-direction:column;gap:10px}.sidebar a{padding:12px 0;border-bottom:1px solid color-mix(in srgb,var(--accent) 35%, var(--line))}
+.topbar{display:flex;justify-content:space-between;align-items:center;padding:18px 28px;border-bottom:1px solid color-mix(in srgb,var(--accent) 40%, var(--line));position:sticky;top:0;background:#fff;z-index:40}
+.home-link{display:flex;align-items:center}.menu-btn{border:1px solid var(--line);background:#fff;width:48px;height:48px;border-radius:999px;cursor:pointer;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:4px;padding:0}.menu-btn span{display:block;width:18px;height:1.5px;background:#111;border-radius:999px}
+.hero-img{width:100%;height:52vh;min-height:320px;object-fit:cover;background:linear-gradient(90deg,#f6fbe9,#ecf8d0);border-bottom:1px solid color-mix(in srgb,var(--accent) 45%, var(--line))}
+.content{width:min(1120px,calc(100% - 36px));margin:0 auto;padding:34px 0 70px}
+.home-title{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text',system-ui,sans-serif;font-size:clamp(3.8rem,9vw,7.4rem);font-weight:800;line-height:.95;margin:0 0 20px;color:var(--accent);letter-spacing:-.05em;text-align:center}
+.home-text{max-width:820px;font-size:1.06rem;color:#232323;border-left:3px solid var(--accent);padding-left:18px;margin:0 auto;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text',system-ui,sans-serif;font-weight:400}
+.route-page{display:none}.route-page.active{display:block}
+.article-wrap{width:min(900px,calc(100% - 36px));margin:0 auto;padding:34px 0 80px}.nyt-head{text-align:center;border-bottom:1px solid #d9d9d9;padding-bottom:18px;margin-bottom:32px}.nyt-title{font-family:'Old Standard TT',serif;font-size:clamp(2.8rem,6vw,5.2rem);line-height:1;letter-spacing:-.04em;margin:0 0 14px}.nyt-kicker{font-family:'Libre Franklin',sans-serif;font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:#444;margin-bottom:10px}.nyt-meta{margin-top:18px;font-size:.85rem;color:#666;font-family:'Libre Franklin',sans-serif}.nyt-image{width:100%;height:auto;display:block;margin:0 auto 12px}
+.article-body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text',system-ui,sans-serif;font-size:1.14rem;line-height:1.95;color:#111;max-width:860px;margin:0 auto}.article-body p{margin:0 0 1.1em}.article-body h2{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text',system-ui,sans-serif;font-size:1.05rem;text-transform:none;letter-spacing:0;margin:2.6rem 0 1rem;font-weight:700}.works{font-family:'Libre Franklin',sans-serif;font-size:1rem;line-height:1.7}
+.story-body,.advice-body{width:min(860px,calc(100% - 36px));margin:0 auto;padding:42px 0 84px}.page-title{font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:#666;margin-bottom:10px}.display-title{font-family:'Old Standard TT',serif;font-size:clamp(2.2rem,5vw,4rem);line-height:1.02;margin:0 0 18px}.story-text,.advice-text{font-family:'Cormorant Garamond',serif;font-size:1.45rem;line-height:1.65}.story-text p,.advice-text p{margin:0 0 1.05em}.question-box{padding:22px 24px;border:1px solid var(--line);border-radius:18px;background:#fcfcfc;margin:24px 0 28px;font-family:'Libre Franklin',sans-serif}
+@media (max-width:700px){.topbar{padding:14px 16px}.hero-img{height:34vh;min-height:220px}.article-body,.story-text,.advice-text{font-size:1.23rem}.sidebar{width:100%}}
+</style>
 </head>
 <body>
-  <div class="overlay" id="overlay"></div>
+<div class="overlay" id="overlay"></div>
+<aside class="sidebar" id="sidebar">
+  <h3>Artifacts</h3>
+  <nav>
+    <a href="#home" data-route>Home</a>
+    <a href="#article" data-route>Feature Article</a>
+    <a href="#story" data-route>The Pink Shirt</a>
+    <a href="#advice" data-route>Advice Column</a>
+  </nav>
+</aside>
 
-  <aside class="sidebar" id="sidebar">
-    <h3>Artifacts</h3>
-    <nav>
-      <a href="#home" data-route>Home</a>
-      <a href="#article" data-route>Feature Article</a>
-      <a href="#story" data-route>The Pink Shirt</a>
-      <a href="#advice" data-route>Advice Column</a>
-    </nav>
-  </aside>
+<header class="topbar">
+  <a href="#home" class="home-link" data-route>
+    <img src="22logo.png" alt="22 logo" style="width:72px;height:72px;object-fit:contain;display:block;border:0;background:transparent;">
+  </a>
+  <button class="menu-btn" id="menuBtn" aria-label="Open menu"><span></span><span></span><span></span></button>
+</header>
 
-  <div class="page">
-    <header class="topbar">
-      <a href="#home" class="home-link" data-route>
-        <img src="22logo.jpg" alt="22 logo" style="width:42px;height:42px;object-fit:contain;display:block;border:0;background:transparent;">
-      </a>
-
-      <button class="preview-btn" id="previewBtn" aria-label="Open preview">Preview</button>
-      <button class="menu-btn" id="menuBtn" aria-label="Open menu">22</button>
-    </header>
-
-    <main>
-      <section id="home-page" class="route-page">
-        <img class="hero-img" alt="Jenson Button themed header image" src="brawn-bgp-001-at-the-2019-festival-of-speed.-ph.-by-lee-carpenter.jpg" width="1800" height="900" />
-
-        <div class="content">
-          <h1 style="font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text',system-ui,sans-serif;font-size:clamp(3.8rem,9vw,7.4rem);font-weight:800;line-height:.95;margin:0 0 20px;color:#c9fb7e;letter-spacing:-.05em;text-align:center;">
-            Life to the Limit
-          </h1>
-
-          <p style="font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text',system-ui,sans-serif;font-size:1.06rem;font-weight:400;color:#232323;max-width:820px;margin:0 auto;border-left:3px solid #c9fb7e;padding-left:18px;">
-            Life to the Limit follows Jenson Button’s journey to becoming the 2009 Formula 1 World Champion with Brawn GP, but it is also an account of what he and the people around him had to surrender in order for that victory to happen, especially his father. Throughout the memoir, themes of pressure, family sacrifice, and the private cost behind public success continue to surface, raising the question at the center of these pages: whether achieving a dream ever truly gives back what it takes away.
-          </p>
-        </div>
-      </section>
-
-      <section id="article-page" class="route-page hidden">
-        <div class="article-wrap">
-          <div class="nyt-head">
-            <div class="nyt-kicker">Breaking F1 News and Updates</div>
-            <h1 class="nyt-title">Formula 1 Times</h1>
-            <div class="nyt-meta" style="display:flex;justify-content:space-between;gap:14px;max-width:860px;margin:0 auto;">
-              <span>VOL. 16,044</span>
-              <span>MONTE CARLO, FRIDAY, JUNE 5, 2026</span>
-            </div>
-          </div>
-
-          <img src="jensoninterlagos.jpg" alt="Jenson Button celebrating at Interlagos" class="nyt-image">
-
-          <div class="article-body">
-            <p>There is a photograph that surfaces every time someone writes about Jenson Button's 2009 Formula 1 World Championship. In it, Button stands on the podium at Interlagos celebrating with tears streaming down his face. The image is one of joy. One that captures the culmination of a dream that had consumed him since he was seven years old, karting on wet tracks across Britain with his father, John, watching from the pit wall in his signature pink shirt. It is the image of a man who made it.</p>
-            <p>But what the photograph cannot show is everything that was not there. The relationships that eroded under the pressure of constant travel and single minded devotion to a sport that asks for everything. The teenage years that became race weekends and training camps rather than an ordinary childhood. The question is, of whether the dream, more specifically, his dream, or perhaps more accurately his father's dream extended into his own, had given back what it had taken.</p>
-            <p>Jenson Alexander Lyons Button was born on January 19, 1980, in Frome, Somerset, a quiet market town in southwest England that feels about as far from the glamorous life of the Formula 1 paddock as it is possible to be. His father, John, was a former rallycross driver. He was somewhat quick, competitive, and deeply in love with motorsport. When Jenson was eight years old, John put him in a kart. Within weeks, the trajectory of both their lives was set.</p>
-            <p>In his autobiography, <em>Life to the Limit</em>, Button writes about what those early years actually looked like. John gave up his own career to support his son's, preparing kart engines for other racers to fund Jenson's campaigns. They traveled together in a campervan up and down the country, sleeping in car parks, eating simply, and betting everything on a boy who was talented but not yet clearly destined to be one of the greats. The autobiography reveals a critical moment from this era: during one long drive home after a poor performance, John, believing Jenson was asleep in the back, told his partner that he was not sure the boy had what it took. Wide awake, Jenson had heard every word, but rather than crushing him, the comment ignited something. From that moment, he says, he became relentless.</p>
-            <p>This is the tension that runs through Button's story and through <em>Life to the Limit</em> itself. The dream did not simply belong to him. It was inherited and paid for by a man who had poured his own unfulfilled ambitions into his son. The cost, then, was never only Jenson's to carry.</p>
-            <h2>Early Formula 1 Career</h2>
-            <p>Button made his Formula 1 debut in 2000 with Williams at the age of twenty, becoming at the time the youngest British driver to do so. The hype was immediate and intense, and for a brief period the media crowned him a future champion. What followed instead was nearly a decade of mediocrity, but not because of a lack of talent, but because the cars he drove were simply not good enough to win.</p>
-            <p>He drove for Benetton, then BAR, then Honda. In 2008, Button scored championship points in just a single race—the Spanish Grand Prix. He finished eighteenth in the drivers' standings. The dream looked finished. Then, amidst the global financial crisis, Honda withdrew from Formula 1 at the end of that season. Button found out while standing at the baggage carousel at Heathrow Airport, returning from a training camp in Lanzarote.</p>
-            <p>What happened next has been called one of the greatest underdog stories in sporting history. Team principal Ross Brawn and a group of key staff purchased the former Honda operation for a substantially small sum, named it Brawn GP, and entered the 2009 season with a car that was supposed to suck, but thanks to an innovative double diffuser design was way faster than the competition. Button won six of the first seven races. He held on through the second half of the season as rivals caught up, and claimed the world title in Brazil. The team existed for a single season before being purchased by Mercedes.</p>
-            <p>In an interview with Motorsport.com, Button was asked whether he ever steps back and reflects on 2009 as a fairytale. His answer was blunt: 'No. Because it wasn't a fairytale season. It was one of the toughest years of my life'. The pressure of leading a championship, of managing a points advantage as the car lost its advantage, and of carrying a team's entire future are not the ingredients of a fairy tale. They are the components of an exhausting ordeal.</p>
-            <h2>Button’s Relationship with his father</h2>
-            <p>The most revealing part of Button's autobiography is his relationship with his father. John Button attended every single one of Jenson's grands prix but one—the 2001 Brazilian Grand Prix, when illness kept him away. His presence at every circuit across seventeen seasons and three hundred races was one of the most visible and celebrated father and son relationships in the sport's modern era. He was nicknamed “Papa Smurf’ by his son, and was known by every journalist, engineer, and team principal in the paddock. People described him as a warm, funny, and generous figure who had given up everything for his son.</p>
-            <p>John Button died on January 12, 2014, at his home in the south of France, at the age of seventy. In the aftermath, McLaren team principal Martin Whitmarsh said that in his long Formula 1 career, he had encountered many drivers' fathers, but that John was perhaps more devoted to his son than any of them. Button publicly described him as “such a big part” of his life, addressing him directly on social media: “Papa, you cannot believe how very proud I feel to be able to call you my Dad”.</p>
-            <p>In the autobiography, the chapters dealing with John's death are the most emotionally exposing in the book. Button later admitted publicly that he lost his love for Formula 1 following his father's passing. The sport had been the connective bond of their entire relationship and it suddenly disappeared without him.</p>
-            <p>The dream, Button seems to suggest, was never really about the trophy. It was about the man in the signature pink shirt who watched him race.</p>
-            <h2>The Aftermath</h2>
-            <p>Button retired from competing in F1 at the end of the 2016 season. He was 36 years old and had spent more than half his life in the sport. In late 2025, he announced the end of his professional racing career altogether, stating his children as the primary reason why. “My kids are four and six and when you're away for a week and you miss so much, you don't get this time back,” he said. “I feel like I've missed a lot the last couple of years, which has been fine because I knew that would happen, but I'm not willing to do that again for another season”.</p>
-            <p>The statement is intriguing not just as an announcement, but as a realization. The same man who was described in <em>Life to the Limit</em> as having given up normalcy and ordinary human continuity in pursuit of the world title is now choosing the things that racing had always required him to put off.</p>
-            <p>The cost of Jenson Button's dream was not extraordinary or out of the blue in the context of the sport. Every world class athlete sacrifices something for their ambition. What makes Button’s story compelling, and what <em>Life to the Limit</em> captures is the way he eventually holds both things simultaneously: the love for racing, and the awareness of what it took from him. He does not present himself as a victim or as someone who would choose differently if given the chance. He simply tells the truth about what it costs, which is the best thing his memoir can do.</p>
-            <h2>Works Cited</h2>
-            <div class="works">
-              <p>Button, Jenson, and Jack Hawkins. <em>Life to the Limit: My Autobiography</em>. Blink Publishing, 2017.</p>
-              <p>“Button Confirms End of Professional Racing Career.” Formula1.com, Formula One World Championship Limited, 30 Oct. 2025.</p>
-              <p>“Jenson Button Admits He Lost Love of Formula 1 After His Father's Death.” Sky Sports, Sky UK, 16 Oct. 2017.</p>
-              <p>“Jenson Button Retires from Racing; 8 Hours of Bahrain Final Race.” ESPN, ESPN Inc., 30 Oct. 2025.</p>
-              <p>“Jenson Button's Father Dies Aged 70 of Suspected Heart Attack.” BBC Sport, BBC, 13 Jan. 2014.</p>
-              <p>“It Wasn't a Fairytale Season — Jenson Button Opens Up About 2009.” Motorsport.com, Motorsport Network, 1 Nov. 2024.</p>
-              <p>“Jenson Button.” Formula 1 Hall of Fame. Formula1.com, Formula One World Championship Limited, 2024.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="story-page" class="route-page hidden">
-        <div class="story-body" style="width:min(860px,calc(100% - 36px));margin:0 auto;padding:42px 0 84px;">
-          <div class="page-title" style="font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:#666;margin-bottom:10px;">Creative Artifact</div>
-          <h1 class="display-title" style="font-family:'Old Standard TT',serif;font-size:clamp(2.2rem,5vw,4rem);line-height:1.02;margin:0 0 18px;">The Pink Shirt</h1>
-          <div class="story-text" style="font-family:'Cormorant Garamond',serif;font-size:1.45rem;line-height:1.65;">
-            <p><em>A short story based on the life of Jenson Button</em></p>
-            <p>The campervan smelled like engine grease. Jenson was lying in the back bunk with his eyes closed, listening to the sounds of the road and the distinct voices coming from the front of the van. He had finished poorly. Again. On a circuit he knew.</p>
-            <p>His father, John, was driving the van sporting his staple pink shirt. They had been on the road for hours and Jenson had gone quiet the way he always did after a bad day.</p>
-            <p>Then he heard murmurs. John's voice dropped low. He was talking to his current partner at the time while he thought his son was asleep. His main concern: he wasn't sure the boy had it. That karting, or even racing entirely wasn't in his future.</p>
-            <p>Jenson opened his eyes. The ceiling was inches away from his face. Surprisingly, he did not feel like crying or disheartened. What he felt instead was decided and sure.</p>
-            <p>He knew what his father had given up for this. Weekends spent preparing engines for other kids just to fund Jenson's entry fees. Life in a campervan instead of normalcy and holidays. The way John had looked at the kart the day they collected it. This was something he was afraid to let go to waste. Jenson had explicitly not asked for any of it, but he understood what it meant. It meant this had to go somewhere. He had to become something.</p>
-            <p>But as he stared at the ceiling, he didn't make a vow or a prayer. He simply decided, quietly and unbeknownst to anyone, that he was going to show his father the fruits of his labor.</p>
-            <p>The following year, he won his first British karting title.</p>
-            <p>On October 18, 2009, at the Circuit of Interlagos in Brazil, Jenson Button became Formula 1 World Champion. He had led the championship since the opening race in Melbourne, survived the second half of the season as Brawn GP's advantage slowly faded away. In an iconic moment, when the chequered flag fell, he pulled over and sat in the car for a long moment before climbing out.</p>
-            <p>He later recounts that he did not remember lifting the trophy clearly. But he remembered finding his father in the crowd. John was 61, in his pink shirt. The pink shirt he had worn in every grandstand, every circuit, and every paddock since the inception of his career. He recalls he had his arms above his head and his face was doing several things at once.</p>
-            <p>Jenson lifted the trophy toward him. In response, John put both hands over his heart.</p>
-            <p>Later, someone asked Jenson whether it had been worth it. All of it, the lean years, the midfield cars, the seasons that went nowhere. He thought about the campervan. He thought about the ceiling. He thought about his father in the pink shirt.</p>
-            <p>“Yes,” he said. “But ask me again when I can see what comes after.”</p>
-            <p>John Button died in January 2014. Jenson raced for two more years afterward and said that his spark for racing was no longer present. That the sport that had been the center of his life for so long suddenly wasnt important anymore. He could no longer show his father the fruits of his labor. Subsequently, he retired at the end of 2016. After a long break, he began commentating and interviewing in F1. He credits his father for his flourishing career, the man in the pink shirt who always supported him.</p>
-          </div>
-        </div>
-      </section>
-
-      <section id="advice-page" class="route-page hidden">
-        <div class="advice-body" style="width:min(860px,calc(100% - 36px));margin:0 auto;padding:42px 0 84px;">
-          <div class="page-title" style="font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:#666;margin-bottom:10px;">Functional Artifact</div>
-          <h1 class="display-title" style="font-family:'Old Standard TT',serif;font-size:clamp(2.2rem,5vw,4rem);line-height:1.02;margin:0 0 18px;">Advice Column</h1>
-          <div class="question-box" style="padding:22px 24px;border:1px solid var(--line);border-radius:18px;background:#fcfcfc;margin:24px 0 28px;font-family:'Libre Franklin',sans-serif;">
-            <strong>Question:</strong><br><br>
-            Dear Jenson,<br><br>
-            I am seventeen years old and I love building things. Ever since I was little I have loved building. From legos and blocks to now engines and circuits, I have always loved working with my hands. My dream is to become an engineer, but my parents want me to take over the family business and go down a more conventional route. I have been working there on weekends since I was twelve and I know it means a lot to them. I don't want to hurt them, but every time I'm there I'm thinking about something I'd rather be doing like designing. How do you chase something when the people you love are pulling in a different direction?<br><br>
-            — Anonymous, age 17
-          </div>
-          <div class="advice-text" style="font-family:'Cormorant Garamond',serif;font-size:1.45rem;line-height:1.65;">
-            <p><strong>Response:</strong></p>
-            <p>Dear Anonymous,</p>
-            <p>You already know what you want. The fact that your mind wanders to design while your hands are doing something else is not distraction but a direction.</p>
-            <p>In fact, I experienced the same thing. During my time in midfield teams like Benetton and BAR, I spent years in cars that were not good enough to win, and people told me to be realistic, to adjust my expectations, to consider that perhaps this was simply as far as I would go. I kept going anyway. Not because I was stubborn, but because I genuinely could not imagine doing anything else. If you feel that way about engineering, that feeling is worth protecting. As I mentioned in <em>Life to the Limit</em>, if I had not continued down an unpromising career path for so long, I would have never gotten to the point in which I was given a car suited to my abilities, and an opportunity to win the world championship in 2009.</p>
-            <p>Your parents are not wrong to want you to take over their business either. They built something real and they want to pass it on to you. That is their way of conveying love even though it might feel like pressure. My dad had done it with me. After his passing I realized my love for Formula 1 was an unfulfilled dream he had passed down to me at a very young age. But a family business runs best when the person running it actually wants to be there. Choosing engineering is not a rejection of them. It is just honesty about who you are. And that choice, no matter right or wrong, will give you better clarity on what to do next since it was yours to make.</p>
-            <p>Talk to them. Not about leaving them but about what you want, about building. Show them what you are designing in your head and prove that your dream is something worth going after. People who built something from nothing usually understand what it means to want to make something.</p>
-            <p>From,<br>Jenson Button<br>2009 Formula 1 World Champion</p>
-          </div>
-        </div>
-      </section>
-    </main>
-  </div>
-
-  <div id="previewModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:80;align-items:center;justify-content:center;padding:18px;">
-    <div style="background:#fff;width:min(1200px,100%);height:min(92vh,980px);border-radius:20px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.4);position:relative;">
-      <button id="closePreview" style="position:absolute;top:14px;right:14px;z-index:2;border:1px solid #ddd;background:#fff;border-radius:999px;width:40px;height:40px;cursor:pointer;font-size:20px;line-height:1;">×</button>
-      <iframe src="" id="previewFrame" style="width:100%;height:100%;border:0;background:#fff;"></iframe>
+<main>
+  <section id="home-page" class="route-page active">
+    <img class="hero-img" alt="Jenson Button themed header image" src="brawn-bgp-001-at-the-2019-festival-of-speed.-ph.-by-lee-carpenter.jpg" width="1800" height="900" />
+    <div class="content">
+      <h1 class="home-title">Life to the Limit</h1>
+      <p class="home-text">Life to the Limit follows Jenson Button’s journey to becoming the 2009 Formula 1 World Champion with Brawn GP, but it is also an account of what he and the people around him had to surrender in order for that victory to happen, especially his father. Throughout the memoir, themes of pressure, family sacrifice, and the private cost behind public success continue to surface, raising the question at the center of these pages: whether achieving a dream ever truly gives back what it takes away.</p>
     </div>
-  </div>
+  </section>
 
-  <script>
-    const pages={home:'home-page',article:'article-page',story:'story-page',advice:'advice-page'};
-    const sidebar=document.getElementById('sidebar');
-    const overlay=document.getElementById('overlay');
-    const menuBtn=document.getElementById('menuBtn');
-    const previewBtn=document.getElementById('previewBtn');
-    const previewModal=document.getElementById('previewModal');
-    const previewFrame=document.getElementById('previewFrame');
-    const closePreview=document.getElementById('closePreview');
+  <section id="article-page" class="route-page">
+    <div class="article-wrap">
+      <div class="nyt-head">
+        <div class="nyt-kicker">Breaking F1 News and Updates</div>
+        <h1 class="nyt-title">Formula 1 Times</h1>
+        <div class="nyt-meta" style="display:flex;justify-content:space-between;gap:14px;max-width:860px;margin:0 auto;">
+          <span>VOL. 16,044</span><span>MONTE CARLO, FRIDAY, JUNE 5, 2026</span>
+        </div>
+      </div>
+      <img src="jensoninterlagos.jpg" alt="Jenson Button celebrating at Interlagos" class="nyt-image">
+      <div class="nyt-head" style="border:0;padding:0;margin:0 0 24px;text-align:left;">
+        <h2 class="nyt-title" style="font-size:clamp(2.2rem,4.4vw,4rem);margin:0;">The Cost of the Dream: What Jenson Button's Dream Really Cost Him</h2>
+      </div>
+      <div class="article-body">
+        <p>There is a photograph that surfaces every time someone writes about Jenson Button's 2009 Formula 1 World Championship. In it, Button stands on the podium at Interlagos celebrating with tears streaming down his face. The image is one of joy. One that captures the culmination of a dream that had consumed him since he was seven years old, karting on wet tracks across Britain with his father, John, watching from the pit wall in his signature pink shirt. It is the image of a man who made it.</p>
+        <p>But what the photograph cannot show is everything that was not there. The relationships that eroded under the pressure of constant travel and single minded devotion to a sport that asks for everything. The teenage years that became race weekends and training camps rather than an ordinary childhood. The question is, of whether the dream, more specifically, his dream, or perhaps more accurately his father's dream extended into his own, had given back what it had taken.</p>
+        <p>Jenson Alexander Lyons Button was born on January 19, 1980, in Frome, Somerset, a quiet market town in southwest England that feels about as far from the glamorous life of the Formula 1 paddock as it is possible to be. His father, John, was a former rallycross driver. He was somewhat quick, competitive, and deeply in love with motorsport. When Jenson was eight years old, John put him in a kart. Within weeks, the trajectory of both their lives was set.</p>
+        <p>In his autobiography, <em>Life to the Limit</em>, Button writes about what those early years actually looked like. John gave up his own career to support his son's, preparing kart engines for other racers to fund Jenson's campaigns. They traveled together in a campervan up and down the country, sleeping in car parks, eating simply, and betting everything on a boy who was talented but not yet clearly destined to be one of the greats. The autobiography reveals a critical moment from this era: during one long drive home after a poor performance, John, believing Jenson was asleep in the back, told his partner that he was not sure the boy had what it took. Wide awake, Jenson had heard every word, but rather than crushing him, the comment ignited something. From that moment, he says, he became relentless.</p>
+        <p>This is the tension that runs through Button's story and through <em>Life to the Limit</em> itself. The dream did not simply belong to him. It was inherited and paid for by a man who had poured his own unfulfilled ambitions into his son. The cost, then, was never only Jenson's to carry.</p>
+        <h2>Early Formula 1 Career</h2>
+        <p>Button made his Formula 1 debut in 2000 with Williams at the age of twenty, becoming at the time the youngest British driver to do so. The hype was immediate and intense, and for a brief period the media crowned him a future champion. What followed instead was nearly a decade of mediocrity, but not because of a lack of talent, but because the cars he drove were simply not good enough to win.</p>
+        <p>He drove for Benetton, then BAR, then Honda. In 2008, Button scored championship points in just a single race—the Spanish Grand Prix. He finished eighteenth in the drivers' standings. The dream looked finished. Then, amidst the global financial crisis, Honda withdrew from Formula 1 at the end of that season. Button found out while standing at the baggage carousel at Heathrow Airport, returning from a training camp in Lanzarote.</p>
+        <p>What happened next has been called one of the greatest underdog stories in sporting history. Team principal Ross Brawn and a group of key staff purchased the former Honda operation for a substantially small sum, named it Brawn GP, and entered the 2009 season with a car that was supposed to suck, but thanks to an innovative double diffuser design was way faster than the competition. Button won six of the first seven races. He held on through the second half of the season as rivals caught up, and claimed the world title in Brazil. The team existed for a single season before being purchased by Mercedes.</p>
+        <p>In an interview with Motorsport.com, Button was asked whether he ever steps back and reflects on 2009 as a fairytale. His answer was blunt: 'No. Because it wasn't a fairytale season. It was one of the toughest years of my life'. The pressure of leading a championship, of managing a points advantage as the car lost its advantage, and of carrying a team's entire future are not the ingredients of a fairy tale. They are the components of an exhausting ordeal.</p>
+        <h2>Button’s Relationship with his father</h2>
+        <p>The most revealing part of Button's autobiography is his relationship with his father. John Button attended every single one of Jenson's grands prix but one—the 2001 Brazilian Grand Prix, when illness kept him away. His presence at every circuit across seventeen seasons and three hundred races was one of the most visible and celebrated father and son relationships in the sport's modern era. He was nicknamed “Papa Smurf’ by his son, and was known by every journalist, engineer, and team principal in the paddock. People described him as a warm, funny, and generous figure who had given up everything for his son.</p>
+        <p>John Button died on January 12, 2014, at his home in the south of France, at the age of seventy. In the aftermath, McLaren team principal Martin Whitmarsh said that in his long Formula 1 career, he had encountered many drivers' fathers, but that John was perhaps more devoted to his son than any of them. Button publicly described him as “such a big part” of his life, addressing him directly on social media: “Papa, you cannot believe how very proud I feel to be able to call you my Dad”.</p>
+        <p>In the autobiography, the chapters dealing with John's death are the most emotionally exposing in the book. Button later admitted publicly that he lost his love for Formula 1 following his father's passing. The sport had been the connective bond of their entire relationship and it suddenly disappeared without him.</p>
+        <p>The dream, Button seems to suggest, was never really about the trophy. It was about the man in the signature pink shirt who watched him race.</p>
+        <h2>The Aftermath</h2>
+        <p>Button retired from competing in F1 at the end of the 2016 season. He was 36 years old and had spent more than half his life in the sport. In late 2025, he announced the end of his professional racing career altogether, stating his children as the primary reason why. “My kids are four and six and when you're away for a week and you miss so much, you don't get this time back,” he said. “I feel like I've missed a lot the last couple of years, which has been fine because I knew that would happen, but I'm not willing to do that again for another season”.</p>
+        <p>The statement is intriguing not just as an announcement, but as a realization. The same man who was described in <em>Life to the Limit</em> as having given up normalcy and ordinary human continuity in pursuit of the world title is now choosing the things that racing had always required him to put off.</p>
+        <p>The cost of Jenson Button's dream was not extraordinary or out of the blue in the context of the sport. Every world class athlete sacrifices something for their ambition. What makes Button’s story compelling, and what <em>Life to the Limit</em> captures is the way he eventually holds both things simultaneously: the love for racing, and the awareness of what it took from him. He does not present himself as a victim or as someone who would choose differently if given the chance. He simply tells the truth about what it costs, which is the best thing his memoir can do.</p>
+        <h2>Works Cited</h2>
+        <div class="works">
+          <p>Button, Jenson, and Jack Hawkins. <em>Life to the Limit: My Autobiography</em>. Blink Publishing, 2017.</p>
+          <p>“Button Confirms End of Professional Racing Career.” Formula1.com, Formula One World Championship Limited, 30 Oct. 2025.</p>
+          <p>“Jenson Button Admits He Lost Love of Formula 1 After His Father's Death.” Sky Sports, Sky UK, 16 Oct. 2017.</p>
+          <p>“Jenson Button Retires from Racing; 8 Hours of Bahrain Final Race.” ESPN, ESPN Inc., 30 Oct. 2025.</p>
+          <p>“Jenson Button's Father Dies Aged 70 of Suspected Heart Attack.” BBC Sport, BBC, 13 Jan. 2014.</p>
+          <p>“It Wasn't a Fairytale Season — Jenson Button Opens Up About 2009.” Motorsport.com, Motorsport Network, 1 Nov. 2024.</p>
+          <p>“Jenson Button.” Formula 1 Hall of Fame. Formula1.com, Formula One World Championship Limited, 2024.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    function openMenu(){sidebar.classList.add('open');overlay.classList.add('show')}
-    function closeMenu(){sidebar.classList.remove('open');overlay.classList.remove('show')}
+  <section id="story-page" class="route-page hidden">
+    <div class="story-body" style="width:min(860px,calc(100% - 36px));margin:0 auto;padding:42px 0 84px;">
+      <div class="page-title" style="font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:#666;margin-bottom:10px;">Creative Artifact</div>
+      <h1 class="display-title" style="font-family:'Old Standard TT',serif;font-size:clamp(2.2rem,5vw,4rem);line-height:1.02;margin:0 0 18px;">The Pink Shirt</h1>
+      <div class="story-text" style="font-family:'Cormorant Garamond',serif;font-size:1.45rem;line-height:1.65;">
+        <p><em>A short story based on the life of Jenson Button</em></p>
+        <p>The campervan smelled like engine grease. Jenson was lying in the back bunk with his eyes closed, listening to the sounds of the road and the distinct voices coming from the front of the van. He had finished poorly. Again. On a circuit he knew.</p>
+        <p>His father, John, was driving the van sporting his staple pink shirt. They had been on the road for hours and Jenson had gone quiet the way he always did after a bad day.</p>
+        <p>Then he heard murmurs. John's voice dropped low. He was talking to his current partner at the time while he thought his son was asleep. His main concern: he wasn't sure the boy had it. That karting, or even racing entirely wasn't in his future.</p>
+        <p>Jenson opened his eyes. The ceiling was inches away from his face. Surprisingly, he did not feel like crying or disheartened. What he felt instead was decided and sure.</p>
+        <p>He knew what his father had given up for this. Weekends spent preparing engines for other kids just to fund Jenson's entry fees. Life in a campervan instead of normalcy and holidays. The way John had looked at the kart the day they collected it. This was something he was afraid to let go to waste. Jenson had explicitly not asked for any of it, but he understood what it meant. It meant this had to go somewhere. He had to become something.</p>
+        <p>But as he stared at the ceiling, he didn't make a vow or a prayer. He simply decided, quietly and unbeknownst to anyone, that he was going to show his father the fruits of his labor.</p>
+        <p>The following year, he won his first British karting title.</p>
+        <p>On October 18, 2009, at the Circuit of Interlagos in Brazil, Jenson Button became Formula 1 World Champion. He had led the championship since the opening race in Melbourne, survived the second half of the season as Brawn GP's advantage slowly faded away. In an iconic moment, when the chequered flag fell, he pulled over and sat in the car for a long moment before climbing out.</p>
+        <p>He later recounts that he did not remember lifting the trophy clearly. But he remembered finding his father in the crowd. John was 61, in his pink shirt. The pink shirt he had worn in every grandstand, every circuit, and every paddock since the inception of his career. He recalls he had his arms above his head and his face was doing several things at once.</p>
+        <p>Jenson lifted the trophy toward him. In response, John put both hands over his heart.</p>
+        <p>Later, someone asked Jenson whether it had been worth it. All of it, the lean years, the midfield cars, the seasons that went nowhere. He thought about the campervan. He thought about the ceiling. He thought about his father in the pink shirt.</p>
+        <p>“Yes,” he said. “But ask me again when I can see what comes after.”</p>
+        <p>John Button died in January 2014. Jenson raced for two more years afterward and said that his spark for racing was no longer present. That the sport that had been the center of his life for so long suddenly wasnt important anymore. He could no longer show his father the fruits of his labor. Subsequently, he retired at the end of 2016. After a long break, he began commentating and interviewing in F1. He credits his father for his flourishing career, the man in the pink shirt who always supported him.</p>
+      </div>
+    </div>
+  </section>
 
-    menuBtn.addEventListener('click',openMenu);
-    overlay.addEventListener('click',closeMenu);
+  <section id="advice-page" class="route-page hidden">
+    <div class="advice-body" style="width:min(860px,calc(100% - 36px));margin:0 auto;padding:42px 0 84px;">
+      <div class="page-title" style="font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:#666;margin-bottom:10px;">Functional Artifact</div>
+      <h1 class="display-title" style="font-family:'Old Standard TT',serif;font-size:clamp(2.2rem,5vw,4rem);line-height:1.02;margin:0 0 18px;">Advice Column</h1>
+      <div class="question-box" style="padding:22px 24px;border:1px solid var(--line);border-radius:18px;background:#fcfcfc;margin:24px 0 28px;font-family:'Libre Franklin',sans-serif;">
+        <strong>Question:</strong><br><br>
+        Dear Jenson,<br><br>
+        I am seventeen years old and I love building things. Ever since I was little I have loved building. From legos and blocks to now engines and circuits, I have always loved working with my hands. My dream is to become an engineer, but my parents want me to take over the family business and go down a more conventional route. I have been working there on weekends since I was twelve and I know it means a lot to them. I don't want to hurt them, but every time I'm there I'm thinking about something I'd rather be doing like designing. How do you chase something when the people you love are pulling in a different direction?<br><br>
+        — Anonymous, age 17
+      </div>
+      <div class="advice-text" style="font-family:'Cormorant Garamond',serif;font-size:1.45rem;line-height:1.65;">
+        <p><strong>Response:</strong></p>
+        <p>Dear Anonymous,</p>
+        <p>You already know what you want. The fact that your mind wanders to design while your hands are doing something else is not distraction but a direction.</p>
+        <p>In fact, I experienced the same thing. During my time in midfield teams like Benetton and BAR, I spent years in cars that were not good enough to win, and people told me to be realistic, to adjust my expectations, to consider that perhaps this was simply as far as I would go. I kept going anyway. Not because I was stubborn, but because I genuinely could not imagine doing anything else. If you feel that way about engineering, that feeling is worth protecting. As I mentioned in <em>Life to the Limit</em>, if I had not continued down an unpromising career path for so long, I would have never gotten to the point in which I was given a car suited to my abilities, and an opportunity to win the world championship in 2009.</p>
+        <p>Your parents are not wrong to want you to take over their business either. They built something real and they want to pass it on to you. That is their way of conveying love even though it might feel like pressure. My dad had done it with me. After his passing I realized my love for Formula 1 was an unfulfilled dream he had passed down to me at a very young age. But a family business runs best when the person running it actually wants to be there. Choosing engineering is not a rejection of them. It is just honesty about who you are. And that choice, no matter right or wrong, will give you better clarity on what to do next since it was yours to make.</p>
+        <p>Talk to them. Not about leaving them but about what you want, about building. Show them what you are designing in your head and prove that your dream is something worth going after. People who built something from nothing usually understand what it means to want to make something.</p>
+        <p>From,<br>Jenson Button<br>2009 Formula 1 World Champion</p>
+      </div>
+    </div>
+  </section>
+</main>
 
-    function route(){
-      const hash=(location.hash||'#home').replace('#','');
-      document.querySelectorAll('.route-page').forEach(p=>p.classList.add('hidden'));
-      const id=pages[hash]||pages.home;
-      document.getElementById(id).classList.remove('hidden');
-      closeMenu();
-      window.scrollTo({top:0,behavior:'instant'});
-    }
-
-    window.addEventListener('hashchange',route);
-    route();
-
-    document.querySelectorAll('[data-route]').forEach(a=>a.addEventListener('click',()=>setTimeout(closeMenu,50)));
-
-    previewBtn.addEventListener('click',()=>{
-      previewFrame.src=location.href;
-      previewModal.style.display='flex';
-    });
-
-    closePreview.addEventListener('click',()=>previewModal.style.display='none');
-    previewModal.addEventListener('click',e=>{
-      if(e.target===previewModal) previewModal.style.display='none';
-    });
-  </script>
+<script>
+const sidebar=document.getElementById('sidebar');
+const overlay=document.getElementById('overlay');
+const menuBtn=document.getElementById('menuBtn');
+const routes={home:'home-page',article:'article-page',story:'story-page',advice:'advice-page'};
+function openMenu(){sidebar.classList.add('open');overlay.classList.add('show')}
+function closeMenu(){sidebar.classList.remove('open');overlay.classList.remove('show')}
+menuBtn.addEventListener('click',openMenu);overlay.addEventListener('click',closeMenu);
+function route(){const hash=(location.hash||'#home').replace('#','');document.querySelectorAll('.route-page').forEach(p=>p.classList.remove('active'));(document.getElementById(routes[hash]||routes.home)||document.getElementById(routes.home)).classList.add('active');closeMenu();window.scrollTo({top:0,behavior:'instant'});}
+window.addEventListener('hashchange',route);route();document.querySelectorAll('[data-route]').forEach(a=>a.addEventListener('click',()=>setTimeout(closeMenu,50)));
+</script>
 </body>
 </html>
